@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp31</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>8</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CyotekImageBox" Version="1.3.0-Alpha1" />
+    <PackageReference Include="morelinq" Version="3.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RestSharp" Version="106.11.4" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0-preview.5.20278.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Kanvas">
+      <HintPath>Libs\Kanvas.dll</HintPath>
+    </Reference>
+    <Reference Include="Komponent">
+      <HintPath>Libs\Komponent.dll</HintPath>
+    </Reference>
+    <Reference Include="Kompression">
+      <HintPath>Libs\Kompression.dll</HintPath>
+    </Reference>
+    <Reference Include="Kontract">
+      <HintPath>Libs\Kontract.dll</HintPath>
+    </Reference>
+    <Reference Include="Kryptography">
+      <HintPath>Libs\Kryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Kore">
+      <HintPath>Libs\Kore.dll</HintPath>
+    </Reference>
+    <Reference Include="plugin_level5">
+      <HintPath>Libs\plugin_level5.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
