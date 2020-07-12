@@ -80,9 +80,18 @@ namespace Leve5RessourceEditor.Level5
 
             // Create final image ressources
             var result = new List<AnmcNamedImageRessource>();
-            for (var i = 0; i < _pointMappings.Count; i++)
+            for (var i = 0; i < Math.Min(_pointMappings.Count, nameIndices.Count); i++)
             {
-                var nameIndex = nameIndices.First(x => x.Value.pbiIndex == i);
+                KeyValuePair<string, (int imageIndex, int pbiIndex)> nameIndex;
+                try
+                {
+                    nameIndex = nameIndices.First(x => x.Value.pbiIndex == i);
+                }
+                catch
+                {
+                    ;
+                    return null;
+                }
                 var imageProvider = imageProviders[nameIndex.Value.imageIndex];
 
                 var partIndex = 0;
