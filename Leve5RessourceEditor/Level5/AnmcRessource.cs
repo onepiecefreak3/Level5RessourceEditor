@@ -70,7 +70,7 @@ namespace Leve5RessourceEditor.Level5
             _pointMappings = await LoadPbis(archiveFileSystem, mappings);
 
             // Load RES.bin
-            var nameIndices = await LoadResBin(ArchiveState);
+            var nameIndices = await LoadResBin(archiveFileSystem);
 
             // Create image providers
             var imageStates = _imageStateInfos.Select(x => x.State as IImageState).ToArray();
@@ -82,16 +82,7 @@ namespace Leve5RessourceEditor.Level5
             var result = new List<AnmcNamedImageRessource>();
             for (var i = 0; i < Math.Min(_pointMappings.Count, nameIndices.Count); i++)
             {
-                KeyValuePair<string, (int imageIndex, int pbiIndex)> nameIndex;
-                try
-                {
-                    nameIndex = nameIndices.First(x => x.Value.pbiIndex == i);
-                }
-                catch
-                {
-                    ;
-                    return null;
-                }
+                var nameIndex = nameIndices.First(x => x.Value.pbiIndex == i);
                 var imageProvider = imageProviders[nameIndex.Value.imageIndex];
 
                 var partIndex = 0;
@@ -186,9 +177,12 @@ namespace Leve5RessourceEditor.Level5
             return result;
         }
 
-        private async Task<IDictionary<string, (int imageIndex, int pbiIndex)>> LoadResBin(IArchiveState archiveState)
+        private async Task<IDictionary<string, (int imageIndex, int pbiIndex)>> LoadResBin(IFileSystem archiveFileSystem)
         {
-            var resFileStream = await archiveState.Files.First(x => x.FilePath == "/RES.bin").GetFileData();
+            var resBinPath = archiveFileSystem
+                .EnumeratePaths(UPath.Root, "*RES.bin", SearchOption.TopDirectoryOnly, SearchTarget.File)
+                .First();
+            var resFileStream = await archiveFileSystem.OpenFileAsync(resBinPath);
             using var br = new BinaryReaderX(resFileStream);
 
             // Check header magic

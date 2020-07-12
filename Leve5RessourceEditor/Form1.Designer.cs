@@ -108,7 +108,7 @@
             this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
             this.newMapToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.newMapToolStripMenuItem.Text = "&New Map";
-            this.newMapToolStripMenuItem.Click += new System.EventHandler(this.newMapToolStripMenuItem_Click);
+            this.Visible = false;
             // 
             // uncheckBtn
             // 
@@ -389,6 +389,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Level5RessourceEditor";
+            this.AllowDrop = true;
+            this.DragDrop += Form1_DragDrop;
+            this.DragEnter += Form1_DragEnter;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

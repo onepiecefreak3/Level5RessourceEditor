@@ -27,7 +27,7 @@ namespace Leve5RessourceEditor
         {
             InitializeComponent();
 
-            var assemblyLoader=new Kore.Managers.Plugins.PluginLoader.AssemblyFilePluginLoader(Assembly.GetAssembly(typeof(plugin_level5.Archives.Arc0Plugin)));
+            var assemblyLoader = new Kore.Managers.Plugins.PluginLoader.AssemblyFilePluginLoader(Assembly.GetAssembly(typeof(plugin_level5.Archives.Arc0Plugin)));
             var pluginManager = new PluginManager(assemblyLoader);
             _ressourceManager = new AnmcRessource(pluginManager);
 
@@ -46,22 +46,7 @@ namespace Leve5RessourceEditor
             if (string.IsNullOrEmpty(ofd.FileName) || !File.Exists(ofd.FileName))
                 return;
 
-            IList<AnmcNamedImageRessource> namedImageRessources;
-            try
-            {
-                namedImageRessources = await _ressourceManager.Load(ofd.FileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Load Error", MessageBoxButtons.OK);
-                return;
-            }
-
-            pbiList.ItemCheck -= pbiList_ItemCheck;
-            FillCheckList(namedImageRessources);
-            pbiList.ItemCheck += pbiList_ItemCheck;
-
-            UpdateImage();
+            OpenFile(ofd.FileName);
         }
 
         private void FillCheckList(IList<AnmcNamedImageRessource> imageRessources)
@@ -187,24 +172,15 @@ namespace Leve5RessourceEditor
             UpdateImage();
         }
 
-        private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Form1_DragEnter(object sender, DragEventArgs e)
         {
-            // TODO: Rethink injection of images
-            //var ofd = new OpenFileDialog
-            //{
-            //    InitialDirectory = Environment.CurrentDirectory,
-            //    Filter = "Portable Network Graphic (*.png)|*.png",
-            //    FilterIndex = 1,
-            //    RestoreDirectory = true
-            //};
+            e.Effect = DragDropEffects.Copy;
+        }
 
-            //if (ofd.ShowDialog() != DialogResult.OK)
-            //    return;
-
-            //var newImage = Image.FromFile(ofd.FileName);
-            //_ressourceManager.SetImage(newImage);
-
-            //UpdateImage();
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            OpenFile(files.First());
         }
 
         #endregion
@@ -259,6 +235,26 @@ namespace Leve5RessourceEditor
                 pbiList.SetItemCheckState(i, CheckState.Unchecked);
 
             pbiList.ItemCheck += pbiList_ItemCheck;
+        }
+
+        private async void OpenFile(string file)
+        {
+            IList<AnmcNamedImageRessource> namedImageRessources;
+            try
+            {
+                namedImageRessources = await _ressourceManager.Load(file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Load Error", MessageBoxButtons.OK);
+                return;
+            }
+
+            pbiList.ItemCheck -= pbiList_ItemCheck;
+            FillCheckList(namedImageRessources);
+            pbiList.ItemCheck += pbiList_ItemCheck;
+
+            UpdateImage();
         }
 
         #endregion
