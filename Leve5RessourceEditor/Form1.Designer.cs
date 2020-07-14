@@ -1,4 +1,6 @@
-﻿namespace Leve5RessourceEditor
+﻿using System.Windows.Forms;
+
+namespace Leve5RessourceEditor
 {
     partial class Form1
     {
@@ -28,17 +30,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Leve5RessourceEditor.Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
-            this.uncheckBtn = new System.Windows.Forms.Button();
-            this.pbiList = new System.Windows.Forms.CheckedListBox();
+            this.btnUncheck = new System.Windows.Forms.Button();
+            this.clbImageRessources = new System.Windows.Forms.CheckedListBox();
             this.resolutionList = new System.Windows.Forms.ComboBox();
-            this.checkBtn = new System.Windows.Forms.Button();
+            this.btnCheck = new System.Windows.Forms.Button();
             this.pb = new Cyotek.Windows.Forms.ImageBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtUvLocationY = new System.Windows.Forms.TextBox();
@@ -60,20 +60,25 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbGridColor1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsbGridColor2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.clrDialog = new System.Windows.Forms.ColorDialog();
+            this.clbRessourceParts = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.newMapToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(921, 24);
@@ -98,37 +103,31 @@
             // 
             // saveToolStripMenuItem
             // 
+            this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // newMapToolStripMenuItem
+            // btnUncheck
             // 
-            this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.newMapToolStripMenuItem.Text = "&New Map";
-            this.Visible = false;
+            this.btnUncheck.Location = new System.Drawing.Point(12, 35);
+            this.btnUncheck.Name = "btnUncheck";
+            this.btnUncheck.Size = new System.Drawing.Size(246, 23);
+            this.btnUncheck.TabIndex = 4;
+            this.btnUncheck.Text = "Uncheck All";
+            this.btnUncheck.UseVisualStyleBackColor = true;
+            this.btnUncheck.Click += new System.EventHandler(this.UncheckAll_Click);
             // 
-            // uncheckBtn
+            // clbImageRessources
             // 
-            this.uncheckBtn.Location = new System.Drawing.Point(12, 54);
-            this.uncheckBtn.Name = "uncheckBtn";
-            this.uncheckBtn.Size = new System.Drawing.Size(120, 23);
-            this.uncheckBtn.TabIndex = 4;
-            this.uncheckBtn.Text = "Uncheck All";
-            this.uncheckBtn.UseVisualStyleBackColor = true;
-            this.uncheckBtn.Click += new System.EventHandler(this.UncheckAll_Click);
-            // 
-            // pbiList
-            // 
-            this.pbiList.FormattingEnabled = true;
-            this.pbiList.Location = new System.Drawing.Point(12, 112);
-            this.pbiList.Name = "pbiList";
-            this.pbiList.Size = new System.Drawing.Size(120, 394);
-            this.pbiList.TabIndex = 5;
-            this.pbiList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.pbiList_ItemCheck);
-            this.pbiList.SelectedIndexChanged += new System.EventHandler(this.pbiList_SelectedIndexChanged);
+            this.clbImageRessources.FormattingEnabled = true;
+            this.clbImageRessources.Location = new System.Drawing.Point(12, 95);
+            this.clbImageRessources.Name = "clbImageRessources";
+            this.clbImageRessources.Size = new System.Drawing.Size(120, 394);
+            this.clbImageRessources.TabIndex = 5;
+            this.clbImageRessources.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbImageRessources_ItemCheck);
+            this.clbImageRessources.SelectedIndexChanged += new System.EventHandler(this.clbImageRessources_SelectedIndexChanged);
             // 
             // resolutionList
             // 
@@ -136,23 +135,23 @@
             this.resolutionList.Items.AddRange(new object[] {
             "Bottom Screen",
             "Top Screen"});
-            this.resolutionList.Location = new System.Drawing.Point(13, 27);
+            this.resolutionList.Location = new System.Drawing.Point(12, 8);
             this.resolutionList.Name = "resolutionList";
-            this.resolutionList.Size = new System.Drawing.Size(119, 21);
+            this.resolutionList.Size = new System.Drawing.Size(246, 21);
             this.resolutionList.Sorted = true;
             this.resolutionList.TabIndex = 8;
             this.resolutionList.Text = "Bottom Screen";
             this.resolutionList.SelectedIndexChanged += new System.EventHandler(this.resolutionList_SelectedIndexChanged);
             // 
-            // checkBtn
+            // btnCheck
             // 
-            this.checkBtn.Location = new System.Drawing.Point(13, 83);
-            this.checkBtn.Name = "checkBtn";
-            this.checkBtn.Size = new System.Drawing.Size(119, 23);
-            this.checkBtn.TabIndex = 9;
-            this.checkBtn.Text = "Check All";
-            this.checkBtn.UseVisualStyleBackColor = true;
-            this.checkBtn.Click += new System.EventHandler(this.CheckAll_Click);
+            this.btnCheck.Location = new System.Drawing.Point(12, 64);
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(246, 23);
+            this.btnCheck.TabIndex = 9;
+            this.btnCheck.Text = "Check All";
+            this.btnCheck.UseVisualStyleBackColor = true;
+            this.btnCheck.Click += new System.EventHandler(this.CheckAll_Click);
             // 
             // pb
             // 
@@ -163,15 +162,13 @@
             this.pb.ImageBorderStyle = Cyotek.Windows.Forms.ImageBoxBorderStyle.FixedSingle;
             this.pb.Location = new System.Drawing.Point(0, 25);
             this.pb.Name = "pb";
-            this.pb.Size = new System.Drawing.Size(771, 392);
+            this.pb.Size = new System.Drawing.Size(648, 405);
             this.pb.TabIndex = 10;
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(138, 27);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -198,8 +195,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pb);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(771, 479);
-            this.splitContainer1.SplitterDistance = 58;
+            this.splitContainer1.Size = new System.Drawing.Size(648, 493);
+            this.splitContainer1.SplitterDistance = 59;
             this.splitContainer1.TabIndex = 11;
             // 
             // txtUvLocationY
@@ -353,7 +350,7 @@
             this.tsbGridColor2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(771, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(648, 25);
             this.toolStrip1.TabIndex = 11;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -362,7 +359,7 @@
             this.tsbGridColor1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbGridColor1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbGridColor1.Name = "tsbGridColor1";
-            this.tsbGridColor1.Size = new System.Drawing.Size(29, 22);
+            this.tsbGridColor1.Size = new System.Drawing.Size(13, 22);
             this.tsbGridColor1.Text = "Grid Color 1";
             this.tsbGridColor1.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
             // 
@@ -371,27 +368,53 @@
             this.tsbGridColor2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbGridColor2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbGridColor2.Name = "tsbGridColor2";
-            this.tsbGridColor2.Size = new System.Drawing.Size(29, 22);
+            this.tsbGridColor2.Size = new System.Drawing.Size(13, 22);
             this.tsbGridColor2.Text = "Grid Color 2";
             this.tsbGridColor2.Click += new System.EventHandler(this.toolStripDropDownButton2_Click);
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.clbRessourceParts);
+            this.splitContainer2.Panel1.Controls.Add(this.resolutionList);
+            this.splitContainer2.Panel1.Controls.Add(this.btnCheck);
+            this.splitContainer2.Panel1.Controls.Add(this.btnUncheck);
+            this.splitContainer2.Panel1.Controls.Add(this.clbImageRessources);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainer2.Size = new System.Drawing.Size(921, 493);
+            this.splitContainer2.SplitterDistance = 269;
+            // 
+            // clbRessourceParts
+            // 
+            this.clbRessourceParts.FormattingEnabled = true;
+            this.clbRessourceParts.Location = new System.Drawing.Point(138, 95);
+            this.clbRessourceParts.Name = "clbRessourceParts";
+            this.clbRessourceParts.Size = new System.Drawing.Size(120, 394);
+            this.clbRessourceParts.TabIndex = 10;
+            this.clbRessourceParts.SelectedIndexChanged += clbRessourceParts_SelectedIndexChanged;
+            this.clbRessourceParts.ItemCheck += clbRessourceParts_ItemCheck;
+            // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 517);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.checkBtn);
-            this.Controls.Add(this.resolutionList);
-            this.Controls.Add(this.pbiList);
-            this.Controls.Add(this.uncheckBtn);
+            this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Level5RessourceEditor";
-            this.AllowDrop = true;
-            this.DragDrop += Form1_DragDrop;
             this.DragEnter += Form1_DragEnter;
+            this.DragDrop += Form1_DragDrop;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -402,6 +425,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -412,14 +439,14 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog openFileDlg;
-        private System.Windows.Forms.Button uncheckBtn;
-        private System.Windows.Forms.CheckedListBox pbiList;
+        private System.Windows.Forms.Button btnUncheck;
+        private System.Windows.Forms.CheckedListBox clbImageRessources;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ComboBox resolutionList;
-        private System.Windows.Forms.ToolStripMenuItem newMapToolStripMenuItem;
-        private System.Windows.Forms.Button checkBtn;
+        private System.Windows.Forms.Button btnCheck;
         private Cyotek.Windows.Forms.ImageBox pb;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox txtUvLocationY;
         private System.Windows.Forms.Label lblUvLocationY;
         private System.Windows.Forms.TextBox txtUvLocationX;
@@ -440,6 +467,7 @@
         private System.Windows.Forms.ToolStripDropDownButton tsbGridColor1;
         private System.Windows.Forms.ToolStripDropDownButton tsbGridColor2;
         private System.Windows.Forms.ColorDialog clrDialog;
+        private CheckedListBox clbRessourceParts;
     }
 }
 

@@ -170,7 +170,7 @@ namespace Leve5RessourceEditor.Level5
                 var pointStream = Decompress(br.BaseStream);
                 using var pointBr = new BinaryReaderX(pointStream);
 
-                var pbiMappings = pointBr.ReadMultiple<short>(pointCount).Select(x => pointMappings[x]).ToArray();
+                var pbiMappings = pointBr.ReadMultiple<short>(pointCount).Select(x => (PointMapping)pointMappings[x].Clone()).ToArray();
                 result.Add(pbiMappings);
             }
 

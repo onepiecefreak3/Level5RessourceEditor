@@ -48,6 +48,11 @@ namespace Leve5RessourceEditor.Level5
             return image;
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         private SizeF GetSize()
         {
             if (!ImageRessources.Any())

@@ -1,6 +1,8 @@
-﻿namespace Leve5RessourceEditor.Level5.Models
+﻿using System;
+
+namespace Leve5RessourceEditor.Level5.Models
 {
-    public class PointMapping
+    public class PointMapping : ICloneable
     {
         public float x;
         public float y;
@@ -18,6 +20,18 @@
                 z == mapping.z &&
                 u == mapping.u &&
                 v == mapping.v;
+        }
+
+        public object Clone()
+        {
+            return new PointMapping
+            {
+                x = x,
+                y = y,
+                z = z,
+                u = u,
+                v = v
+            };
         }
     }
 }
