@@ -405,6 +405,7 @@ namespace Leve5RessourceEditor
             // Form1
             // 
             this.AllowDrop = true;
+            this.KeyPreview = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 517);
@@ -415,6 +416,7 @@ namespace Leve5RessourceEditor
             this.Text = "Level5RessourceEditor";
             this.DragEnter += Form1_DragEnter;
             this.DragDrop += Form1_DragDrop;
+            this.KeyDown += Form1_KeyDown;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

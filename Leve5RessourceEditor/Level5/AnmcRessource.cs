@@ -231,7 +231,7 @@ namespace Leve5RessourceEditor.Level5
 
         #region Save methods
 
-        public void Save(string savePath = "")
+        public void Save(UPath savePath)
         {
             // 1. Create file system for archive
             var archiveFileSystem = FileSystemFactory.CreateAfiFileSystem(ArchiveState, UPath.Root, _archiveStateInfo.StreamManager);

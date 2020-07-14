@@ -80,6 +80,43 @@ namespace Leve5RessourceEditor
 
         #endregion
 
+        #region Save File
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileAs();
+        }
+
+        private void SaveFileAs()
+        {
+            var sfd = new SaveFileDialog
+            {
+                InitialDirectory = _openedFile.GetDirectory().FullName,
+                FileName = _openedFile.GetName()
+            };
+
+            if (sfd.ShowDialog() != DialogResult.OK)
+            {
+                MessageBox.Show("An error occurred when selecting a save path.", "Save Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            SaveFile(sfd.FileName);
+        }
+
+        private void SaveFile()
+        {
+            SaveFile(_openedFile);
+        }
+
+        private void SaveFile(UPath savePath)
+        {
+            _ressourceManager.Save(savePath);
+        }
+
+        #endregion
+
         #region Fill Methods
 
         private void FillCheckList(IList<AnmcNamedImageRessource> namedImageRessources)
@@ -232,25 +269,6 @@ namespace Leve5RessourceEditor
             UpdateImage();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var sfd = new SaveFileDialog
-            {
-                InitialDirectory = _openedFile.GetDirectory().FullName,
-                FileName = _openedFile.GetName()
-            };
-
-            if (sfd.ShowDialog() != DialogResult.OK)
-            {
-                MessageBox.Show("An error occurred when selecting a save path.", "Save Error", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-
-            var fileName = sfd.FileName;
-            _ressourceManager.Save(fileName);
-        }
-
         private void resolutionList_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateImage();
@@ -285,6 +303,21 @@ namespace Leve5RessourceEditor
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             OpenFile(files.First());
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.KeyCode == Keys.S)
+            {
+                // Save As
+                SaveFileAs();
+            }
+
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                // Save
+                SaveFile();
+            }
         }
 
         #endregion
