@@ -214,6 +214,9 @@ namespace Leve5RessourceEditor.Level5
                 stringBr.BaseStream.Position = pbiEntries[i].stringPointer.offset;
                 var pbiName = stringBr.ReadCStringSJIS();
 
+                if (i >= unkEntries.Count)
+                    continue;
+
                 var imageAreaParent = unkEntries[i].imageAreaParent;
                 var imageArea = imageAreas.First(x => x.stringPointer.crc32 == imageAreaParent);
 
