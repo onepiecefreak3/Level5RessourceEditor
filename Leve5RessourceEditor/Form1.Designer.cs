@@ -41,21 +41,21 @@ namespace Leve5RessourceEditor
             this.btnCheck = new System.Windows.Forms.Button();
             this.pb = new Cyotek.Windows.Forms.ImageBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txtUvLocationY = new System.Windows.Forms.TextBox();
+            this.txtUvLocationY = new System.Windows.Forms.NumericUpDown();
             this.lblUvLocationY = new System.Windows.Forms.Label();
-            this.txtUvLocationX = new System.Windows.Forms.TextBox();
+            this.txtUvLocationX = new System.Windows.Forms.NumericUpDown();
             this.lblUvLocationX = new System.Windows.Forms.Label();
-            this.txtUvHeight = new System.Windows.Forms.TextBox();
+            this.txtUvHeight = new System.Windows.Forms.NumericUpDown();
             this.lblUvHeight = new System.Windows.Forms.Label();
-            this.txtUvWidth = new System.Windows.Forms.TextBox();
+            this.txtUvWidth = new System.Windows.Forms.NumericUpDown();
             this.lblUvWidth = new System.Windows.Forms.Label();
-            this.txtLocationY = new System.Windows.Forms.TextBox();
+            this.txtLocationY = new System.Windows.Forms.NumericUpDown();
             this.lblLocationY = new System.Windows.Forms.Label();
-            this.txtLocationX = new System.Windows.Forms.TextBox();
+            this.txtLocationX = new System.Windows.Forms.NumericUpDown();
             this.lblLocationX = new System.Windows.Forms.Label();
-            this.txtHeight = new System.Windows.Forms.TextBox();
+            this.txtHeight = new System.Windows.Forms.NumericUpDown();
             this.lblHeight = new System.Windows.Forms.Label();
-            this.txtWidth = new System.Windows.Forms.TextBox();
+            this.txtWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbGridColor1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -207,6 +207,8 @@ namespace Leve5RessourceEditor
             this.txtUvLocationY.Size = new System.Drawing.Size(100, 20);
             this.txtUvLocationY.TabIndex = 15;
             this.txtUvLocationY.TextChanged += new System.EventHandler(this.txtUvLocationY_TextChanged);
+            this.txtUvLocationY.Minimum = int.MinValue;
+            this.txtUvLocationY.Maximum = int.MaxValue;
             // 
             // lblUvLocationY
             // 
@@ -225,6 +227,8 @@ namespace Leve5RessourceEditor
             this.txtUvLocationX.Size = new System.Drawing.Size(100, 20);
             this.txtUvLocationX.TabIndex = 13;
             this.txtUvLocationX.TextChanged += new System.EventHandler(this.txtUvLocationX_TextChanged);
+            this.txtUvLocationX.Minimum = int.MinValue;
+            this.txtUvLocationX.Maximum = int.MaxValue;
             // 
             // lblUvLocationX
             // 
@@ -243,6 +247,8 @@ namespace Leve5RessourceEditor
             this.txtUvHeight.Size = new System.Drawing.Size(100, 20);
             this.txtUvHeight.TabIndex = 11;
             this.txtUvHeight.TextChanged += new System.EventHandler(this.txtUvHeight_TextChanged);
+            this.txtUvHeight.Minimum = int.MinValue;
+            this.txtUvHeight.Maximum = int.MaxValue;
             // 
             // lblUvHeight
             // 
@@ -261,6 +267,8 @@ namespace Leve5RessourceEditor
             this.txtUvWidth.Size = new System.Drawing.Size(100, 20);
             this.txtUvWidth.TabIndex = 9;
             this.txtUvWidth.TextChanged += new System.EventHandler(this.txtUvWidth_TextChanged);
+            this.txtUvWidth.Minimum = int.MinValue;
+            this.txtUvWidth.Maximum = int.MaxValue;
             // 
             // lblUvWidth
             // 
@@ -279,6 +287,8 @@ namespace Leve5RessourceEditor
             this.txtLocationY.Size = new System.Drawing.Size(100, 20);
             this.txtLocationY.TabIndex = 7;
             this.txtLocationY.TextChanged += new System.EventHandler(this.txtLocationY_TextChanged);
+            this.txtLocationY.Minimum = int.MinValue;
+            this.txtLocationY.Maximum = int.MaxValue;
             // 
             // lblLocationY
             // 
@@ -297,6 +307,8 @@ namespace Leve5RessourceEditor
             this.txtLocationX.Size = new System.Drawing.Size(100, 20);
             this.txtLocationX.TabIndex = 5;
             this.txtLocationX.TextChanged += new System.EventHandler(this.txtLocationX_TextChanged);
+            this.txtLocationX.Minimum = int.MinValue;
+            this.txtLocationX.Maximum = int.MaxValue;
             // 
             // lblLocationX
             // 
@@ -315,6 +327,8 @@ namespace Leve5RessourceEditor
             this.txtHeight.Size = new System.Drawing.Size(100, 20);
             this.txtHeight.TabIndex = 3;
             this.txtHeight.TextChanged += new System.EventHandler(this.txtHeight_TextChanged);
+            this.txtHeight.Minimum = int.MinValue;
+            this.txtHeight.Maximum = int.MaxValue;
             // 
             // lblHeight
             // 
@@ -333,6 +347,8 @@ namespace Leve5RessourceEditor
             this.txtWidth.Size = new System.Drawing.Size(100, 20);
             this.txtWidth.TabIndex = 1;
             this.txtWidth.TextChanged += new System.EventHandler(this.txtWidth_TextChanged);
+            this.txtWidth.Minimum = int.MinValue;
+            this.txtWidth.Maximum = int.MaxValue;
             // 
             // lblWidth
             // 
@@ -449,21 +465,21 @@ namespace Leve5RessourceEditor
         private Cyotek.Windows.Forms.ImageBox pb;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.TextBox txtUvLocationY;
+        private System.Windows.Forms.NumericUpDown txtUvLocationY;
         private System.Windows.Forms.Label lblUvLocationY;
-        private System.Windows.Forms.TextBox txtUvLocationX;
+        private System.Windows.Forms.NumericUpDown txtUvLocationX;
         private System.Windows.Forms.Label lblUvLocationX;
-        private System.Windows.Forms.TextBox txtUvHeight;
+        private System.Windows.Forms.NumericUpDown txtUvHeight;
         private System.Windows.Forms.Label lblUvHeight;
-        private System.Windows.Forms.TextBox txtUvWidth;
+        private System.Windows.Forms.NumericUpDown txtUvWidth;
         private System.Windows.Forms.Label lblUvWidth;
-        private System.Windows.Forms.TextBox txtLocationY;
+        private System.Windows.Forms.NumericUpDown txtLocationY;
         private System.Windows.Forms.Label lblLocationY;
-        private System.Windows.Forms.TextBox txtLocationX;
+        private System.Windows.Forms.NumericUpDown txtLocationX;
         private System.Windows.Forms.Label lblLocationX;
-        private System.Windows.Forms.TextBox txtHeight;
+        private System.Windows.Forms.NumericUpDown txtHeight;
         private System.Windows.Forms.Label lblHeight;
-        private System.Windows.Forms.TextBox txtWidth;
+        private System.Windows.Forms.NumericUpDown txtWidth;
         private System.Windows.Forms.Label lblWidth;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton tsbGridColor1;
