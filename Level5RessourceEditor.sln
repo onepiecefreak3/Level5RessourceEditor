@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leve5RessourceEditor", "Leve5RessourceEditor\Leve5RessourceEditor.csproj", "{EA0761D1-8C58-40E9-BC2F-4A20DDBC3A50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level5RessourceEditor", "Level5RessourceEditor\Level5RessourceEditor.csproj", "{EA0761D1-8C58-40E9-BC2F-4A20DDBC3A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
