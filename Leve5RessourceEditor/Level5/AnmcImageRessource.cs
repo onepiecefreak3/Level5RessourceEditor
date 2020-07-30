@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using Kontract;
 using Leve5RessourceEditor.Level5.Models;
@@ -71,7 +72,10 @@ namespace Leve5RessourceEditor.Level5
             var deltaHeight = newSize.Height - Size.Height;
 
             _mappings[1].y += deltaHeight;
+            _mappings[5].y += deltaHeight;
+
             _mappings[2].x += deltaWidth;
+            _mappings[4].x += deltaWidth;
 
             _mappings[3].x += deltaWidth;
             _mappings[3].y += deltaHeight;
@@ -85,7 +89,10 @@ namespace Leve5RessourceEditor.Level5
             var deltaHeight = newSize.Height - UvSize.Height;
 
             _mappings[1].v += deltaHeight;
+            _mappings[5].v += deltaHeight;
+
             _mappings[2].u += deltaWidth;
+            _mappings[4].u += deltaWidth;
 
             _mappings[3].u += deltaWidth;
             _mappings[3].v += deltaHeight;
