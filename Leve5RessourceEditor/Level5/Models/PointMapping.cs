@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Leve5RessourceEditor.Level5.Models
 {
@@ -9,6 +10,16 @@ namespace Leve5RessourceEditor.Level5.Models
         public float z;
         public float u;
         public float v;
+
+        public PointF GetLocation()
+        {
+            return new PointF(x, y);
+        }
+
+        public PointF GetUv()
+        {
+            return new PointF(u, v);
+        }
 
         public object Clone()
         {

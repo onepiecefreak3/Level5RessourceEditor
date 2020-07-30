@@ -32,7 +32,7 @@ namespace Leve5RessourceEditor.Level5
             Name = name;
 
             _imageProvider = imageProvider;
-            _mappings = mappings.Distinct().ToArray();
+            _mappings = mappings.ToArray();
 
             LoadLocations(mappings);
             LoadSizes(mappings);
@@ -103,16 +103,47 @@ namespace Leve5RessourceEditor.Level5
         public void DrawOnImage(Image image)
         {
             using var g = Graphics.FromImage(image);
-            var centeredLocation = new PointF(image.Width / 2 + Location.X, image.Height / 2 + Location.Y);
+            //g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+            //var imageCenter = new PointF(image.Width / 2, image.Height / 2);
+            var topLeftLocation = new PointF(image.Width / 2 + Location.X, image.Height / 2 + Location.Y);
+
+            // Draw triangles
+            //var srcPoints = new[] { _mappings[0].GetUv(), _mappings[1].GetUv(), _mappings[2].GetUv() };
+            //var destPoints = new[]
+            //{
+            //    PointF.Add(_mappings[0].GetLocation(), new SizeF(imageCenter)),
+            //    PointF.Add(_mappings[1].GetLocation(), new SizeF(imageCenter)),
+            //    PointF.Add(_mappings[2].GetLocation(), new SizeF(imageCenter))
+            //};
+            //DrawTriangle(g, srcPoints, destPoints);
+
+            //srcPoints = new[] { _mappings[3].GetUv(), _mappings[4].GetUv(), _mappings[5].GetUv() };
+            //destPoints = new[]
+            //{
+            //    PointF.Add(_mappings[3].GetLocation(), new SizeF(imageCenter)),
+            //    PointF.Add(_mappings[4].GetLocation(), new SizeF(imageCenter)),
+            //    PointF.Add(_mappings[5].GetLocation(), new SizeF(imageCenter))
+            //};
+            //DrawTriangle(g, srcPoints, destPoints);
 
             var map = _imageProvider.Image;
-            g.DrawImage(map, new RectangleF(centeredLocation, Size), new RectangleF(UvLocation, UvSize), GraphicsUnit.Pixel);
+            g.DrawImage(map, new RectangleF(topLeftLocation, Size), new RectangleF(UvLocation, UvSize), GraphicsUnit.Pixel);
         }
 
         public Image GetImage()
         {
             var image = new Bitmap((int)Size.Width, (int)Size.Height);
             using var g = Graphics.FromImage(image);
+
+            // Draw triangles
+            //var srcPoints = new[] { _mappings[0].GetUv(), _mappings[1].GetUv(), _mappings[2].GetUv() };
+            //var destPoints = new[] { _mappings[0].GetLocation(), _mappings[1].GetLocation(), _mappings[2].GetLocation() };
+            //DrawTriangle(g, srcPoints, destPoints);
+
+            //srcPoints = new[] { _mappings[3].GetUv(), _mappings[4].GetUv(), _mappings[5].GetUv() };
+            //destPoints = new[] { _mappings[3].GetLocation(), _mappings[4].GetLocation(), _mappings[5].GetLocation() };
+            //DrawTriangle(g, srcPoints, destPoints);
 
             var map = _imageProvider.Image;
             g.DrawImage(map, new RectangleF(Point.Empty, Size), new RectangleF(UvLocation, UvSize), GraphicsUnit.Pixel);
@@ -139,6 +170,38 @@ namespace Leve5RessourceEditor.Level5
 
             Size = new SizeF(maxPoint.x - Location.X, maxPoint.y - Location.Y);
             UvSize = new SizeF(maxPoint.u - UvLocation.X, maxPoint.v - UvLocation.Y);
+        }
+
+        // TODO: Transform source triangle to destiantion triangle
+        private void DrawTriangle(Graphics g, PointF[] srcPoints, PointF[] destPoints)
+        {
+            // Create buffer image
+            var srcRect = ComputeRectangle(srcPoints);
+            var newBmp = new Bitmap((int)srcRect.Width, (int)srcRect.Height);
+            using var bufferG = Graphics.FromImage(newBmp);
+
+            // Restrict area to draw the image to
+            using var gp = new GraphicsPath();
+            gp.AddPolygon(srcPoints.Select(x=>PointF.Subtract(x,new SizeF(srcRect.Location))).ToArray());
+            bufferG.Clip = new Region(gp);
+
+            // Cut image from source
+            bufferG.DrawImage(_imageProvider.Image, new RectangleF(0, 0, srcRect.Width, srcRect.Height), srcRect, GraphicsUnit.Pixel);
+
+            // Draw buffer image to final image
+            var destRect = ComputeRectangle(destPoints);
+            g.DrawImage(newBmp, destRect);
+        }
+
+        private RectangleF ComputeRectangle(PointF[] points)
+        {
+            var minX = points.Min(x => x.X);
+            var maxX = points.Max(x => x.X);
+
+            var minY = points.Min(x => x.Y);
+            var maxY = points.Max(x => x.Y);
+
+            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
         }
     }
 }
