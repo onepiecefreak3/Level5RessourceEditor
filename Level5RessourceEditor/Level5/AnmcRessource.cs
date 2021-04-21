@@ -200,8 +200,13 @@ namespace Leve5RessourceEditor.Level5
             // Read pbi entries
             br.BaseStream.Position = resHeader.tableCluster2[1].offset << 2;
             var unkEntries = br.ReadMultiple<TableCluster2Table2>(resHeader.tableCluster2[1].entryCount);
-            br.BaseStream.Position = resHeader.tableCluster2[3].offset << 2;
-            var pbiEntries = br.ReadMultiple<ResPbiDimensionEntry>(resHeader.tableCluster2[3].entryCount);
+
+            IList<ResPbiDimensionEntry> pbiEntries = Array.Empty<ResPbiDimensionEntry>();
+            if (resHeader.tableCluster2.Length >= 4)
+            {
+                br.BaseStream.Position = resHeader.tableCluster2[3].offset << 2;
+                pbiEntries = br.ReadMultiple<ResPbiDimensionEntry>(resHeader.tableCluster2[3].entryCount);
+            }
 
             // Create string reader
             var stringOffset = resHeader.stringTablesOffset << 2;
@@ -210,10 +215,14 @@ namespace Leve5RessourceEditor.Level5
 
             // Create string connection to data
             var result = new Dictionary<string, (int, int)>();
-            for (var i = 0; i < pbiEntries.Count; i++)
+            for (var i = 0; i < resHeader.tableCluster2[1].entryCount; i++)
             {
-                stringBr.BaseStream.Position = pbiEntries[i].stringPointer.offset;
-                var pbiName = stringBr.ReadCStringSJIS();
+                var pbiName = i.ToString();
+                if (pbiEntries.Count > i)
+                {
+                    stringBr.BaseStream.Position = pbiEntries[i].stringPointer.offset;
+                    pbiName = stringBr.ReadCStringSJIS();
+                }
 
                 if (i >= unkEntries.Count)
                     continue;
