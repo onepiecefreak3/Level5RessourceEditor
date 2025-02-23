@@ -217,15 +217,8 @@ namespace Leve5RessourceEditor.Level5
             var result = new Dictionary<string, (int, int)>();
             for (var i = 0; i < resHeader.tableCluster2[1].entryCount; i++)
             {
-                var pbiName = i.ToString();
-                if (pbiEntries.Count > i)
-                {
-                    stringBr.BaseStream.Position = pbiEntries[i].stringPointer.offset;
-                    pbiName = stringBr.ReadCStringSJIS();
-                }
-
-                if (i >= unkEntries.Count)
-                    continue;
+                stringBr.BaseStream.Position = unkEntries[i].stringPointer.offset;
+                var pbiName = stringBr.ReadCStringSJIS();
 
                 var imageAreaParent = unkEntries[i].imageAreaParent;
                 var imageArea = imageAreas.First(x => x.stringPointer.crc32 == imageAreaParent);
