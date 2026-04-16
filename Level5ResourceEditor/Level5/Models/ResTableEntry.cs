@@ -1,4 +1,4 @@
-﻿namespace Leve5RessourceEditor.Level5.Models
+﻿namespace Level5ResourceEditor.Level5.Models
 {
     class ResTableEntry
     {

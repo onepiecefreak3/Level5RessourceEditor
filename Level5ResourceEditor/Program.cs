@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Leve5RessourceEditor
+namespace Level5ResourceEditor
 {
     static class Program
     {
@@ -13,7 +13,7 @@ namespace Leve5RessourceEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }

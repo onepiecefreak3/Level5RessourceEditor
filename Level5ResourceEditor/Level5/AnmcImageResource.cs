@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using Kontract;
-using Leve5RessourceEditor.Level5.Models;
+using Level5ResourceEditor.Level5.Models;
 
-namespace Leve5RessourceEditor.Level5
+namespace Level5ResourceEditor.Level5
 {
-    class AnmcImageRessource
+    class AnmcImageResource
     {
         private readonly ImageProvider _imageProvider;
         private readonly IList<PointMapping> _mappings;
@@ -21,7 +21,7 @@ namespace Leve5RessourceEditor.Level5
         public PointF UvLocation { get; private set; }
         public SizeF UvSize { get; private set; }
 
-        public AnmcImageRessource(ImageProvider imageProvider, IList<PointMapping> mappings, string name)
+        public AnmcImageResource(ImageProvider imageProvider, IList<PointMapping> mappings, string name)
         {
             ContractAssertions.IsNotNull(imageProvider, nameof(imageProvider));
             ContractAssertions.IsNotNull(mappings, nameof(mappings));

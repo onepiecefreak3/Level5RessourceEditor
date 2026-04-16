@@ -2,7 +2,7 @@
 using Kontract;
 using Kontract.Kanvas;
 
-namespace Leve5RessourceEditor.Level5
+namespace Level5ResourceEditor.Level5
 {
     class ImageProvider
     {

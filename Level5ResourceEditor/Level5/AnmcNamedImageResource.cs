@@ -4,31 +4,31 @@ using System.Drawing;
 using System.Linq;
 using Kontract;
 
-namespace Leve5RessourceEditor.Level5
+namespace Level5ResourceEditor.Level5
 {
-    class AnmcNamedImageRessource
+    class AnmcNamedImageResource
     {
         public string Name { get; }
 
-        public IList<AnmcImageRessource> ImageRessources { get; }
+        public IList<AnmcImageResource> ImageResources { get; }
 
         public SizeF Size => GetSize();
 
         public PointF Location => GetLocation();
 
-        public AnmcNamedImageRessource(string name, IList<AnmcImageRessource> imageRessources)
+        public AnmcNamedImageResource(string name, IList<AnmcImageResource> imageResources)
         {
             ContractAssertions.IsNotNull(name, nameof(name));
-            ContractAssertions.IsNotNull(imageRessources, nameof(imageRessources));
+            ContractAssertions.IsNotNull(imageResources, nameof(imageResources));
 
             Name = name;
-            ImageRessources = imageRessources;
+            ImageResources = imageResources;
         }
 
         public void DrawOnImage(Image image)
         {
-            foreach (var imageRessource in ImageRessources)
-                imageRessource.DrawOnImage(image);
+            foreach (var imageResource in ImageResources)
+                imageResource.DrawOnImage(image);
         }
 
         public Image GetImage()
@@ -37,11 +37,11 @@ namespace Leve5RessourceEditor.Level5
             using var g = Graphics.FromImage(image);
 
             var location = Location;
-            foreach (var imageRessource in ImageRessources)
+            foreach (var imageResource in ImageResources)
             {
-                var dest = new PointF(Math.Abs(location.X - imageRessource.Location.X), Math.Abs(location.Y - imageRessource.Location.Y));
+                var dest = new PointF(Math.Abs(location.X - imageResource.Location.X), Math.Abs(location.Y - imageResource.Location.Y));
 
-                var drawImg = imageRessource.GetImage();
+                var drawImg = imageResource.GetImage();
                 g.DrawImage(drawImg, dest);
             }
 
@@ -55,11 +55,11 @@ namespace Leve5RessourceEditor.Level5
 
         private SizeF GetSize()
         {
-            if (!ImageRessources.Any())
+            if (!ImageResources.Any())
                 return SizeF.Empty;
 
-            var maxWidth = ImageRessources.Max(x => x.Location.X + x.Size.Width);
-            var maxHeight = ImageRessources.Max(x => x.Location.Y + x.Size.Height);
+            var maxWidth = ImageResources.Max(x => x.Location.X + x.Size.Width);
+            var maxHeight = ImageResources.Max(x => x.Location.Y + x.Size.Height);
 
             var location = Location;
             return new SizeF(maxWidth - location.X, maxHeight - location.Y);
@@ -67,11 +67,11 @@ namespace Leve5RessourceEditor.Level5
 
         private PointF GetLocation()
         {
-            if (!ImageRessources.Any())
+            if (!ImageResources.Any())
                 return PointF.Empty;
 
-            var minX = ImageRessources.Min(x => x.Location.X);
-            var minY = ImageRessources.Min(x => x.Location.Y);
+            var minX = ImageResources.Min(x => x.Location.X);
+            var minY = ImageResources.Min(x => x.Location.Y);
 
             return new PointF(minX, minY);
         }

@@ -14,13 +14,12 @@ using Kontract.Interfaces.Plugins.State;
 using Kontract.Models.IO;
 using Kore.Factories;
 using Kore.Managers.Plugins;
-using Leve5RessourceEditor.Level5.Models;
-using MoreLinq;
+using Level5ResourceEditor.Level5.Models;
 using plugin_level5.Compression;
 
-namespace Leve5RessourceEditor.Level5
+namespace Level5ResourceEditor.Level5
 {
-    class AnmcRessource : IDisposable
+    class AnmcResource : IDisposable
     {
         private readonly IInternalPluginManager _pluginManager;
 
@@ -30,7 +29,7 @@ namespace Leve5RessourceEditor.Level5
 
         private IArchiveState ArchiveState => _archiveStateInfo?.State as IArchiveState;
 
-        public AnmcRessource(IInternalPluginManager pluginManager)
+        public AnmcResource(IInternalPluginManager pluginManager)
         {
             ContractAssertions.IsNotNull(pluginManager, nameof(pluginManager));
 
@@ -54,7 +53,7 @@ namespace Leve5RessourceEditor.Level5
 
         #region Load Methods
 
-        public async Task<IList<AnmcNamedImageRessource>> Load(string file)
+        public async Task<IList<AnmcNamedImageResource>> Load(string file)
         {
             if (_archiveStateInfo != null)
                 Close();
@@ -79,24 +78,24 @@ namespace Leve5RessourceEditor.Level5
             for (var i = 0; i < imageProviders.Length; i++)
                 imageProviders[i] = new ImageProvider(new KanvasImage(imageStates[i], imageStates[i].Images[0]));
 
-            // Create final image ressources
-            var result = new List<AnmcNamedImageRessource>();
+            // Create final image Resources
+            var result = new List<AnmcNamedImageResource>();
             for (var i = 0; i < Math.Min(_pointMappings.Count, nameIndices.Count); i++)
             {
                 var nameIndex = nameIndices.First(x => x.Value.pbiIndex == i);
                 var imageProvider = imageProviders[nameIndex.Value.imageIndex];
 
                 var partIndex = 0;
-                var imageRessources = new List<AnmcImageRessource>();
+                var imageResources = new List<AnmcImageResource>();
                 for (var mappingIndex = 0; mappingIndex < _pointMappings[i].Count; mappingIndex += 6)
                 {
                     var points = _pointMappings[i].Skip(mappingIndex).Take(6).ToArray();
-                    var imageRessource = new AnmcImageRessource(imageProvider, points, $"{nameIndex.Key} Part {partIndex++}");
+                    var imageResource = new AnmcImageResource(imageProvider, points, $"{nameIndex.Key} Part {partIndex++}");
 
-                    imageRessources.Add(imageRessource);
+                    imageResources.Add(imageResource);
                 }
 
-                result.Add(new AnmcNamedImageRessource(nameIndex.Key, imageRessources));
+                result.Add(new AnmcNamedImageResource(nameIndex.Key, imageResources));
             }
 
             return result;
@@ -243,7 +242,7 @@ namespace Leve5RessourceEditor.Level5
             var archiveFileSystem = FileSystemFactory.CreateAfiFileSystem(ArchiveState, UPath.Root, _archiveStateInfo.StreamManager);
 
             // 2. Save PVB and PBIs
-            var distinctPointMappings = _pointMappings.SelectMany(x => x).Batch(6).Select(x => x.OrderBy(y => y.v).ThenBy(y => y.u)).SelectMany(x => x).Distinct().ToArray();
+            var distinctPointMappings = _pointMappings.SelectMany(x => x).Chunk(6).Select(x => x.OrderBy(y => y.v).ThenBy(y => y.u)).SelectMany(x => x).Distinct().ToArray();
             SavePvb(archiveFileSystem, distinctPointMappings);
             SavePbis(archiveFileSystem, _pointMappings, distinctPointMappings);
 

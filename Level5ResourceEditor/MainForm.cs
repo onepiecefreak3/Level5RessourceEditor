@@ -10,16 +10,16 @@ using System.Windows.Forms;
 using Kontract.Extensions;
 using Kontract.Models.IO;
 using Kore.Managers.Plugins;
-using Leve5RessourceEditor.Level5;
+using Level5ResourceEditor.Level5;
 
-namespace Leve5RessourceEditor
+namespace Level5ResourceEditor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private UPath _openedFile;
 
-        private readonly AnmcRessource _ressourceManager;
-        private readonly IDictionary<AnmcImageRessource, bool> _selectedRessourceParts;
+        private readonly AnmcResource _resourceManager;
+        private readonly IDictionary<AnmcImageResource, bool> _selectedResourceParts;
 
         private readonly IDictionary<string, Size> _imageSizeDictionary = new Dictionary<string, Size>
         {
@@ -27,14 +27,14 @@ namespace Leve5RessourceEditor
             ["Bottom Screen"] = new Size(320, 240)
         };
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
             var assemblyLoader = new Kore.Managers.Plugins.PluginLoader.AssemblyFilePluginLoader(Assembly.GetAssembly(typeof(plugin_level5.Archives.Arc0Plugin)));
             var pluginManager = new PluginManager(assemblyLoader);
-            _ressourceManager = new AnmcRessource(pluginManager);
-            _selectedRessourceParts = new Dictionary<AnmcImageRessource, bool>();
+            _resourceManager = new AnmcResource(pluginManager);
+            _selectedResourceParts = new Dictionary<AnmcImageResource, bool>();
 
             DrawGridColor(tsbGridColor1, pb.GridColor);
             DrawGridColor(tsbGridColor2, pb.GridColorAlternate);
@@ -56,10 +56,10 @@ namespace Leve5RessourceEditor
 
         private async void OpenFile(string file)
         {
-            IList<AnmcNamedImageRessource> namedImageRessources;
+            IList<AnmcNamedImageResource> namedImageResources;
             try
             {
-                namedImageRessources = await _ressourceManager.Load(file);
+                namedImageResources = await _resourceManager.Load(file);
             }
             catch (Exception ex)
             {
@@ -70,10 +70,10 @@ namespace Leve5RessourceEditor
             saveToolStripMenuItem.Enabled = true;
             _openedFile = file;
 
-            clbImageRessources.ItemCheck -= clbImageRessources_ItemCheck;
-            FillCheckList(namedImageRessources);
-            FillRessourceParts(Array.Empty<AnmcImageRessource>());
-            clbImageRessources.ItemCheck += clbImageRessources_ItemCheck;
+            clbImageResources.ItemCheck -= clbImageResources_ItemCheck;
+            FillCheckList(namedImageResources);
+            FillResourceParts(Array.Empty<AnmcImageResource>());
+            clbImageResources.ItemCheck += clbImageResources_ItemCheck;
 
             UpdateImage();
         }
@@ -112,84 +112,84 @@ namespace Leve5RessourceEditor
 
         private void SaveFile(UPath savePath)
         {
-            _ressourceManager.Save(savePath);
+            _resourceManager.Save(savePath);
         }
 
         #endregion
 
         #region Fill Methods
 
-        private void FillCheckList(IList<AnmcNamedImageRessource> namedImageRessources)
+        private void FillCheckList(IList<AnmcNamedImageResource> namedImageResources)
         {
-            clbImageRessources.Items.Clear();
+            clbImageResources.Items.Clear();
 
-            foreach (var namedImageRessource in namedImageRessources)
+            foreach (var namedImageResource in namedImageResources)
             {
-                clbImageRessources.Items.Add(namedImageRessource, true);
+                clbImageResources.Items.Add(namedImageResource, true);
 
-                foreach (var imageRessource in namedImageRessource.ImageRessources)
-                    _selectedRessourceParts[imageRessource] = true;
+                foreach (var imageResource in namedImageResource.ImageResources)
+                    _selectedResourceParts[imageResource] = true;
             }
         }
 
-        private void FillRessourceParts(IList<AnmcImageRessource> imageRessources)
+        private void FillResourceParts(IList<AnmcImageResource> imageResources)
         {
-            clbRessourceParts.SelectedIndexChanged -= clbRessourceParts_SelectedIndexChanged;
-            clbRessourceParts.ItemCheck -= clbRessourceParts_ItemCheck;
+            clbResourceParts.SelectedIndexChanged -= clbResourceParts_SelectedIndexChanged;
+            clbResourceParts.ItemCheck -= clbResourceParts_ItemCheck;
 
-            clbRessourceParts.Items.Clear();
+            clbResourceParts.Items.Clear();
 
-            foreach (var imageRessource in imageRessources)
-                clbRessourceParts.Items.Add(imageRessource, _selectedRessourceParts[imageRessource]);
+            foreach (var imageResource in imageResources)
+                clbResourceParts.Items.Add(imageResource, _selectedResourceParts[imageResource]);
 
-            clbRessourceParts.ItemCheck += clbRessourceParts_ItemCheck;
-            clbRessourceParts.SelectedIndexChanged += clbRessourceParts_SelectedIndexChanged;
+            clbResourceParts.ItemCheck += clbResourceParts_ItemCheck;
+            clbResourceParts.SelectedIndexChanged += clbResourceParts_SelectedIndexChanged;
         }
 
         #endregion
 
         #region Events
 
-        private void clbImageRessources_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void clbImageResources_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            var checkedItems = GetCheckedItems<AnmcNamedImageRessource>(clbImageRessources);
+            var checkedItems = GetCheckedItems<AnmcNamedImageResource>(clbImageResources);
 
             if (e.NewValue == CheckState.Checked)
-                checkedItems.Add((AnmcNamedImageRessource)clbImageRessources.Items[e.Index]);
+                checkedItems.Add((AnmcNamedImageResource)clbImageResources.Items[e.Index]);
 
             if (e.NewValue == CheckState.Unchecked)
-                checkedItems.Remove((AnmcNamedImageRessource)clbImageRessources.Items[e.Index]);
+                checkedItems.Remove((AnmcNamedImageResource)clbImageResources.Items[e.Index]);
 
-            var checkedRessources = checkedItems
-                .SelectMany(x => x.ImageRessources)
-                .Where(x => _selectedRessourceParts[x])
+            var checkedResources = checkedItems
+                .SelectMany(x => x.ImageResources)
+                .Where(x => _selectedResourceParts[x])
                 .ToArray();
-            UpdateImage(checkedRessources);
+            UpdateImage(checkedResources);
         }
 
-        private void clbRessourceParts_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void clbResourceParts_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            var checkedItems = GetCheckedItems<AnmcNamedImageRessource>(clbImageRessources);
-            var checkedRessources = checkedItems
-                .SelectMany(x => x.ImageRessources)
-                .Where(x => _selectedRessourceParts[x])
+            var checkedItems = GetCheckedItems<AnmcNamedImageResource>(clbImageResources);
+            var checkedResources = checkedItems
+                .SelectMany(x => x.ImageResources)
+                .Where(x => _selectedResourceParts[x])
                 .ToList();
 
             if (e.NewValue == CheckState.Checked)
             {
-                var ressource = (AnmcImageRessource)clbRessourceParts.Items[e.Index];
-                checkedRessources.Add(ressource);
-                _selectedRessourceParts[ressource] = true;
+                var Resource = (AnmcImageResource)clbResourceParts.Items[e.Index];
+                checkedResources.Add(Resource);
+                _selectedResourceParts[Resource] = true;
             }
 
             if (e.NewValue == CheckState.Unchecked)
             {
-                var ressource = (AnmcImageRessource)clbRessourceParts.Items[e.Index];
-                checkedRessources.Remove(ressource);
-                _selectedRessourceParts[ressource] = false;
+                var Resource = (AnmcImageResource)clbResourceParts.Items[e.Index];
+                checkedResources.Remove(Resource);
+                _selectedResourceParts[Resource] = false;
             }
 
-            UpdateImage(checkedRessources);
+            UpdateImage(checkedResources);
         }
 
         private void UncheckAll_Click(object sender, EventArgs e)
@@ -206,65 +206,65 @@ namespace Leve5RessourceEditor
 
         private void txtWidth_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtWidth, value => imageRessource.SetSize(new SizeF(value, imageRessource.Size.Height)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtWidth, value => imageResource.SetSize(new SizeF(value, imageResource.Size.Height)));
 
             UpdateImage();
         }
 
         private void txtHeight_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
             UpdateImageInformation(txtHeight,
-                value => imageRessource.SetSize(new SizeF(imageRessource.Size.Width, value)));
+                value => imageResource.SetSize(new SizeF(imageResource.Size.Width, value)));
 
             UpdateImage();
         }
 
         private void txtLocationX_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtLocationX, value => imageRessource.SetLocation(new PointF(value, imageRessource.Location.Y)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtLocationX, value => imageResource.SetLocation(new PointF(value, imageResource.Location.Y)));
 
             UpdateImage();
         }
 
         private void txtLocationY_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtLocationY, value => imageRessource.SetLocation(new PointF(imageRessource.Location.X, value)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtLocationY, value => imageResource.SetLocation(new PointF(imageResource.Location.X, value)));
 
             UpdateImage();
         }
 
         private void txtUvWidth_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtUvWidth, value => imageRessource.SetUvSize(new SizeF(value, imageRessource.UvSize.Height)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtUvWidth, value => imageResource.SetUvSize(new SizeF(value, imageResource.UvSize.Height)));
 
             UpdateImage();
         }
 
         private void txtUvHeight_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtUvHeight, value => imageRessource.SetUvSize(new SizeF(imageRessource.UvSize.Width, value)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtUvHeight, value => imageResource.SetUvSize(new SizeF(imageResource.UvSize.Width, value)));
 
             UpdateImage();
         }
 
         private void txtUvLocationX_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtUvLocationX, value => imageRessource.SetUvLocation(new PointF(value, imageRessource.UvLocation.Y)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtUvLocationX, value => imageResource.SetUvLocation(new PointF(value, imageResource.UvLocation.Y)));
 
             UpdateImage();
         }
 
         private void txtUvLocationY_TextChanged(object sender, EventArgs e)
         {
-            var imageRessource = (AnmcImageRessource)((Control)sender).Tag;
-            UpdateImageInformation(txtUvLocationY, value => imageRessource.SetUvLocation(new PointF(imageRessource.UvLocation.X, value)));
+            var imageResource = (AnmcImageResource)((Control)sender).Tag;
+            UpdateImageInformation(txtUvLocationY, value => imageResource.SetUvLocation(new PointF(imageResource.UvLocation.X, value)));
 
             UpdateImage();
         }
@@ -274,24 +274,24 @@ namespace Leve5RessourceEditor
             UpdateImage();
         }
 
-        private void clbImageRessources_SelectedIndexChanged(object sender, EventArgs e)
+        private void clbImageResources_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (clbImageRessources.SelectedIndex < 0)
+            if (clbImageResources.SelectedIndex < 0)
                 return;
 
             ClearImageInformation();
 
-            var namedImagedRessource = GetSelectedNamedImageRessource();
-            FillRessourceParts(namedImagedRessource.ImageRessources);
+            var namedImagedResource = GetSelectedNamedImageResource();
+            FillResourceParts(namedImagedResource.ImageResources);
         }
 
-        private void clbRessourceParts_SelectedIndexChanged(object sender, EventArgs e)
+        private void clbResourceParts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (clbRessourceParts.SelectedIndex < 0)
+            if (clbResourceParts.SelectedIndex < 0)
                 return;
 
-            var imagedRessource = GetSelectedImageRessource();
-            FillImageInformation(imagedRessource);
+            var imagedResource = GetSelectedImageResource();
+            FillImageInformation(imagedResource);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -326,21 +326,21 @@ namespace Leve5RessourceEditor
 
         private void UpdateImage()
         {
-            var checkedItems = GetCheckedItems<AnmcNamedImageRessource>(clbImageRessources);
-            var checkedRessources = checkedItems
-                .SelectMany(x => x.ImageRessources)
-                .Where(x => _selectedRessourceParts[x])
+            var checkedItems = GetCheckedItems<AnmcNamedImageResource>(clbImageResources);
+            var checkedResources = checkedItems
+                .SelectMany(x => x.ImageResources)
+                .Where(x => _selectedResourceParts[x])
                 .ToArray();
-            UpdateImage(checkedRessources);
+            UpdateImage(checkedResources);
         }
 
-        private void UpdateImage(IList<AnmcImageRessource> imageRessources)
+        private void UpdateImage(IList<AnmcImageResource> imageResources)
         {
             var imageSize = _imageSizeDictionary[resolutionList.Text];
             var image = new Bitmap(imageSize.Width, imageSize.Height);
 
-            foreach (var imageRessource in imageRessources)
-                imageRessource.DrawOnImage(image);
+            foreach (var imageResource in imageResources)
+                imageResource.DrawOnImage(image);
 
             pb.Image = image;
         }
@@ -360,34 +360,34 @@ namespace Leve5RessourceEditor
 
         private void CheckAll()
         {
-            clbImageRessources.ItemCheck -= clbImageRessources_ItemCheck;
+            clbImageResources.ItemCheck -= clbImageResources_ItemCheck;
 
-            for (var i = 0; i < clbImageRessources.Items.Count; i++)
-                clbImageRessources.SetItemCheckState(i, CheckState.Checked);
+            for (var i = 0; i < clbImageResources.Items.Count; i++)
+                clbImageResources.SetItemCheckState(i, CheckState.Checked);
 
-            clbImageRessources.ItemCheck += clbImageRessources_ItemCheck;
+            clbImageResources.ItemCheck += clbImageResources_ItemCheck;
         }
 
         private void UncheckAll()
         {
-            clbImageRessources.ItemCheck -= clbImageRessources_ItemCheck;
+            clbImageResources.ItemCheck -= clbImageResources_ItemCheck;
 
-            for (var i = 0; i < clbImageRessources.Items.Count; i++)
-                clbImageRessources.SetItemCheckState(i, CheckState.Unchecked);
+            for (var i = 0; i < clbImageResources.Items.Count; i++)
+                clbImageResources.SetItemCheckState(i, CheckState.Unchecked);
 
-            clbImageRessources.ItemCheck += clbImageRessources_ItemCheck;
+            clbImageResources.ItemCheck += clbImageResources_ItemCheck;
         }
 
         #endregion
 
-        private AnmcNamedImageRessource GetSelectedNamedImageRessource()
+        private AnmcNamedImageResource GetSelectedNamedImageResource()
         {
-            return (AnmcNamedImageRessource)clbImageRessources.SelectedItem;
+            return (AnmcNamedImageResource)clbImageResources.SelectedItem;
         }
 
-        private AnmcImageRessource GetSelectedImageRessource()
+        private AnmcImageResource GetSelectedImageResource()
         {
-            return (AnmcImageRessource)clbRessourceParts.SelectedItem;
+            return (AnmcImageResource)clbResourceParts.SelectedItem;
         }
 
         private void UpdateImageInformation(Control textBox, Action<float> valueSetter)
@@ -398,7 +398,7 @@ namespace Leve5RessourceEditor
             valueSetter(value);
         }
 
-        private void FillImageInformation(AnmcImageRessource anmcImageRessource)
+        private void FillImageInformation(AnmcImageResource anmcImageResource)
         {
             txtWidth.TextChanged -= txtWidth_TextChanged;
             txtHeight.TextChanged -= txtHeight_TextChanged;
@@ -409,14 +409,14 @@ namespace Leve5RessourceEditor
             txtUvLocationX.TextChanged -= txtUvLocationX_TextChanged;
             txtUvLocationY.TextChanged -= txtUvLocationY_TextChanged;
 
-            txtWidth.Tag = anmcImageRessource;
-            txtHeight.Tag = anmcImageRessource;
-            txtUvWidth.Tag = anmcImageRessource;
-            txtUvHeight.Tag = anmcImageRessource;
-            txtLocationX.Tag = anmcImageRessource;
-            txtLocationY.Tag = anmcImageRessource;
-            txtUvLocationX.Tag = anmcImageRessource;
-            txtUvLocationY.Tag = anmcImageRessource;
+            txtWidth.Tag = anmcImageResource;
+            txtHeight.Tag = anmcImageResource;
+            txtUvWidth.Tag = anmcImageResource;
+            txtUvHeight.Tag = anmcImageResource;
+            txtLocationX.Tag = anmcImageResource;
+            txtLocationY.Tag = anmcImageResource;
+            txtUvLocationX.Tag = anmcImageResource;
+            txtUvLocationY.Tag = anmcImageResource;
 
             txtWidth.Enabled = true;
             txtHeight.Enabled = true;
@@ -427,14 +427,14 @@ namespace Leve5RessourceEditor
             txtUvLocationX.Enabled = true;
             txtUvLocationY.Enabled = true;
 
-            txtWidth.Text = anmcImageRessource.Size.Width.ToString(CultureInfo.InvariantCulture);
-            txtHeight.Text = anmcImageRessource.Size.Height.ToString(CultureInfo.InvariantCulture);
-            txtUvWidth.Text = anmcImageRessource.UvSize.Width.ToString(CultureInfo.InvariantCulture);
-            txtUvHeight.Text = anmcImageRessource.UvSize.Height.ToString(CultureInfo.InvariantCulture);
-            txtLocationX.Text = anmcImageRessource.Location.X.ToString(CultureInfo.InvariantCulture);
-            txtLocationY.Text = anmcImageRessource.Location.Y.ToString(CultureInfo.InvariantCulture);
-            txtUvLocationX.Text = anmcImageRessource.UvLocation.X.ToString(CultureInfo.InvariantCulture);
-            txtUvLocationY.Text = anmcImageRessource.UvLocation.Y.ToString(CultureInfo.InvariantCulture);
+            txtWidth.Text = anmcImageResource.Size.Width.ToString(CultureInfo.InvariantCulture);
+            txtHeight.Text = anmcImageResource.Size.Height.ToString(CultureInfo.InvariantCulture);
+            txtUvWidth.Text = anmcImageResource.UvSize.Width.ToString(CultureInfo.InvariantCulture);
+            txtUvHeight.Text = anmcImageResource.UvSize.Height.ToString(CultureInfo.InvariantCulture);
+            txtLocationX.Text = anmcImageResource.Location.X.ToString(CultureInfo.InvariantCulture);
+            txtLocationY.Text = anmcImageResource.Location.Y.ToString(CultureInfo.InvariantCulture);
+            txtUvLocationX.Text = anmcImageResource.UvLocation.X.ToString(CultureInfo.InvariantCulture);
+            txtUvLocationY.Text = anmcImageResource.UvLocation.Y.ToString(CultureInfo.InvariantCulture);
 
             txtWidth.TextChanged += txtWidth_TextChanged;
             txtHeight.TextChanged += txtHeight_TextChanged;

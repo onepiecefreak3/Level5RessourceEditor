@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace Leve5RessourceEditor
+namespace Level5ResourceEditor
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -10,9 +10,9 @@ namespace Leve5RessourceEditor
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Verwendete Ressourcen bereinigen.
+        /// Verwendete Resourcen bereinigen.
         /// </summary>
-        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
+        /// <param name="disposing">True, wenn verwaltete Resourcen gelöscht werden sollen; andernfalls False.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -36,7 +36,7 @@ namespace Leve5RessourceEditor
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
             this.btnUncheck = new System.Windows.Forms.Button();
-            this.clbImageRessources = new System.Windows.Forms.CheckedListBox();
+            this.clbImageResources = new System.Windows.Forms.CheckedListBox();
             this.resolutionList = new System.Windows.Forms.ComboBox();
             this.btnCheck = new System.Windows.Forms.Button();
             this.pb = new Cyotek.Windows.Forms.ImageBox();
@@ -62,7 +62,7 @@ namespace Leve5RessourceEditor
             this.tsbGridColor2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.clrDialog = new System.Windows.Forms.ColorDialog();
-            this.clbRessourceParts = new System.Windows.Forms.CheckedListBox();
+            this.clbResourceParts = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -119,15 +119,15 @@ namespace Leve5RessourceEditor
             this.btnUncheck.UseVisualStyleBackColor = true;
             this.btnUncheck.Click += new System.EventHandler(this.UncheckAll_Click);
             // 
-            // clbImageRessources
+            // clbImageResources
             // 
-            this.clbImageRessources.FormattingEnabled = true;
-            this.clbImageRessources.Location = new System.Drawing.Point(12, 95);
-            this.clbImageRessources.Name = "clbImageRessources";
-            this.clbImageRessources.Size = new System.Drawing.Size(120, 394);
-            this.clbImageRessources.TabIndex = 5;
-            this.clbImageRessources.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbImageRessources_ItemCheck);
-            this.clbImageRessources.SelectedIndexChanged += new System.EventHandler(this.clbImageRessources_SelectedIndexChanged);
+            this.clbImageResources.FormattingEnabled = true;
+            this.clbImageResources.Location = new System.Drawing.Point(12, 95);
+            this.clbImageResources.Name = "clbImageResources";
+            this.clbImageResources.Size = new System.Drawing.Size(120, 394);
+            this.clbImageResources.TabIndex = 5;
+            this.clbImageResources.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbImageResources_ItemCheck);
+            this.clbImageResources.SelectedIndexChanged += new System.EventHandler(this.clbImageResources_SelectedIndexChanged);
             // 
             // resolutionList
             // 
@@ -396,11 +396,11 @@ namespace Leve5RessourceEditor
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.clbRessourceParts);
+            this.splitContainer2.Panel1.Controls.Add(this.clbResourceParts);
             this.splitContainer2.Panel1.Controls.Add(this.resolutionList);
             this.splitContainer2.Panel1.Controls.Add(this.btnCheck);
             this.splitContainer2.Panel1.Controls.Add(this.btnUncheck);
-            this.splitContainer2.Panel1.Controls.Add(this.clbImageRessources);
+            this.splitContainer2.Panel1.Controls.Add(this.clbImageResources);
             // 
             // splitContainer2.Panel2
             // 
@@ -408,15 +408,15 @@ namespace Leve5RessourceEditor
             this.splitContainer2.Size = new System.Drawing.Size(921, 493);
             this.splitContainer2.SplitterDistance = 269;
             // 
-            // clbRessourceParts
+            // clbResourceParts
             // 
-            this.clbRessourceParts.FormattingEnabled = true;
-            this.clbRessourceParts.Location = new System.Drawing.Point(138, 95);
-            this.clbRessourceParts.Name = "clbRessourceParts";
-            this.clbRessourceParts.Size = new System.Drawing.Size(120, 394);
-            this.clbRessourceParts.TabIndex = 10;
-            this.clbRessourceParts.SelectedIndexChanged += clbRessourceParts_SelectedIndexChanged;
-            this.clbRessourceParts.ItemCheck += clbRessourceParts_ItemCheck;
+            this.clbResourceParts.FormattingEnabled = true;
+            this.clbResourceParts.Location = new System.Drawing.Point(138, 95);
+            this.clbResourceParts.Name = "clbResourceParts";
+            this.clbResourceParts.Size = new System.Drawing.Size(120, 394);
+            this.clbResourceParts.TabIndex = 10;
+            this.clbResourceParts.SelectedIndexChanged += clbResourceParts_SelectedIndexChanged;
+            this.clbResourceParts.ItemCheck += clbResourceParts_ItemCheck;
             // 
             // Form1
             // 
@@ -429,7 +429,7 @@ namespace Leve5RessourceEditor
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Level5RessourceEditor";
+            this.Text = "Level5ResourceEditor";
             this.DragEnter += Form1_DragEnter;
             this.DragDrop += Form1_DragDrop;
             this.KeyDown += Form1_KeyDown;
@@ -458,7 +458,7 @@ namespace Leve5RessourceEditor
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog openFileDlg;
         private System.Windows.Forms.Button btnUncheck;
-        private System.Windows.Forms.CheckedListBox clbImageRessources;
+        private System.Windows.Forms.CheckedListBox clbImageResources;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ComboBox resolutionList;
         private System.Windows.Forms.Button btnCheck;
@@ -485,7 +485,7 @@ namespace Leve5RessourceEditor
         private System.Windows.Forms.ToolStripDropDownButton tsbGridColor1;
         private System.Windows.Forms.ToolStripDropDownButton tsbGridColor2;
         private System.Windows.Forms.ColorDialog clrDialog;
-        private CheckedListBox clbRessourceParts;
+        private CheckedListBox clbResourceParts;
     }
 }
 
